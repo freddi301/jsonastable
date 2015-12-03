@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -21,6 +22,8 @@
     <div class="container-fluid">
       <div class="col-sx-12 col-md-12">
         <textarea id="src" style="width:100%" rows="3" onkeyup="render()" onmouseup="render()" placeholder="Paste your JSON here"></textarea>
+        <span><input id="datatable_enabled" type="checkbox" onchange="render()">DataTables</span>
+        <span><input id="bootstrap_enabled" type="checkbox" onchange="render()">Bootstrap</span>
       </div>
       <div id="result" class="col-sx-12 col-md-12 table-responsive well">
       </div>
@@ -30,12 +33,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
     <script src="cito.js"></script>
     <script src="jsonastable.js"></script>
+    <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
     <script>
       function render(){
         var container = $("#result").empty()[0];
         var json = JSON.parse($("#src").val());
-        var table = cito.vdom.append(container, jsonastable(json));
+        var table = cito.vdom.append(container, jsonastable(json, {bootstrap:$("#bootstrap_enabled").is(":checked"), datatable:$("#datatable_enabled").is(":checked")}));
         $("caption").click(function(){$(this.nextSibling).toggleClass("none")});
+        if ($("#datatable_enabled").is(":checked")) $("td>table.datatable").DataTable({"lengthMenu": [[-1, 1, 5, 10, 50], ["All", 1, 5, 10, 50]]});
       }
     </script>
   </body>
