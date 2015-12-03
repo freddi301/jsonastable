@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style media="screen">
+      td, th { border: 1px solid #ccc; padding: 3px }
+      td > td { border: 0px }
+      table > td { border: 0px }
+      .none {display: none !important}
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="col-sx-12 col-md-12">
+        <textarea id="src" style="width:100%" rows="3" onkeyup="render()" onmouseup="render()" placeholder="Paste your JSON here"></textarea>
+      </div>
+      <div id="result" class="col-sx-12 col-md-12 table-responsive well">
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+    <script src="cito.js"></script>
+    <script src="jsonastable.js"></script>
+    <script>
+      function render(){
+        var container = $("#result").empty()[0];
+        var json = JSON.parse($("#src").val());
+        var table = cito.vdom.append(container, jsonastable(json));
+        $("caption").click(function(){$(this.nextSibling).toggleClass("none")});
+      }
+    </script>
+  </body>
+</html>
